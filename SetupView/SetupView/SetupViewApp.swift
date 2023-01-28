@@ -4,7 +4,9 @@ import SwiftUI
 struct SetupViewApp: App {
   var body: some Scene {
     WindowGroup {
-      HomeView()
+      // HomeView1()
+      // HomeView2()
+      // HomeView3()
     }
   }
 }
@@ -34,7 +36,7 @@ struct HomeView1: View {
         ForEach(4...12, id: \.self) { Text(String($0)) }
       }
       .pickerStyle(.wheel)
-      NavigationLink(destination: QuestionView(highestNumber: highestNumber!)) {
+      NavigationLink(destination: QuestionView1(highestNumber: highestNumber!)) {
         Text("Start")
       }
     }
@@ -55,5 +57,71 @@ struct QuestionView1: View {
     Button("I got it") {
       question = Question(highestNumber)
     }
+  }
+}
+
+struct HomeView2: View {
+  @State var highestNumber: Int? = nil
+
+  var body: some View {
+    NavigationStack {
+      Picker("Highest Number", selection: $highestNumber) {
+        ForEach(4...12, id: \.self) { Text(String($0)) }
+      }
+      .pickerStyle(.wheel)
+      NavigationLink(destination: QuestionView2(highestNumber: $highestNumber)) {
+        Text("Start")
+      }
+    }
+  }
+}
+
+struct QuestionView2: View {
+  @Binding var highestNumber: Int?
+  @State var question: Question? = nil
+
+  var body: some View {
+    if let questionR = question {
+      Text(questionR.prompt)
+      Button("I got it") {
+        question = Question(highestNumber!)
+      }.onChange(of: highestNumber) { _ in
+        question = Question(highestNumber!)
+      }
+    }
+  }
+}
+
+struct HomeView3: View {
+  @State var highestNumber: Int? = nil
+
+  var body: some View {
+    NavigationStack {
+      Picker("Highest Number", selection: $highestNumber) {
+        ForEach(4...12, id: \.self) { Text(String($0)) }
+      }
+      .pickerStyle(.wheel)
+      NavigationLink(destination: QuestionView3(highestNumber: $highestNumber)) {
+        Text("Start")
+      }
+    }
+  }
+}
+
+struct QuestionView3: View {
+  @Binding var highestNumber: Int?
+  @State var question: Question? = nil
+
+  var body: some View {
+    if let questionR = question {
+      Text(questionR.prompt)
+      Button("I got it") {
+        question = Question(highestNumber!)
+      }
+    }
+    Text("Huzzah")
+      .onAppear {
+        question = Question(highestNumber!)
+      }
   }
 }
