@@ -4,9 +4,11 @@ import SwiftUI
 struct SetupViewApp: App {
   var body: some Scene {
     WindowGroup {
+      Text("uncomment a HomeView to see each of the 4 bad examples")
       // HomeView1()
       // HomeView2()
       // HomeView3()
+      // HomeView4()
     }
   }
 }
@@ -123,5 +125,38 @@ struct QuestionView3: View {
       .onAppear {
         question = Question(highestNumber!)
       }
+  }
+}
+
+struct HomeView4: View {
+  @State var highestNumber: Int? = nil
+  @State var question: Question? = nil
+
+  var body: some View {
+    NavigationStack {
+      Picker("Highest Number", selection: $highestNumber) {
+        ForEach(4...12, id: \.self) { Text(String($0)) }
+      }
+      .pickerStyle(.wheel)
+      NavigationLink(destination: QuestionView4(highestNumber: $highestNumber, question: $question)) {
+        Text("Start")
+      }.onChange(of: highestNumber) { _ in
+        question = Question(highestNumber!)
+      }
+    }
+  }
+}
+
+struct QuestionView4: View {
+  @Binding var highestNumber: Int?
+  @Binding var question: Question?
+
+  var body: some View {
+    if let questionR = question {
+      Text(questionR.prompt)
+      Button("I got it") {
+        question = Question(highestNumber!)
+      }
+    }
   }
 }
