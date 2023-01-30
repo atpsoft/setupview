@@ -93,9 +93,6 @@ struct QuestionView2: View {
     Text(question.prompt)
     Button("I got it") {
       question = Question(highestNumber)
-    }.onChange(of: highestNumber) { _ in
-      print("onChangeOfHighestNumber: \(highestNumber)")
-      question = Question(highestNumber)
     }
   }
 }
