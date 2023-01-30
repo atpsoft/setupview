@@ -19,6 +19,7 @@ struct Question {
   let answer: Int
 
   init(_ highestNumber: Int) {
+    print("Question.init \(highestNumber)")
     value1 = Int.random(in: 1...highestNumber)
     value2 = Int.random(in: 1...highestNumber)
     answer = value1 * value2
@@ -83,18 +84,20 @@ struct QuestionView2: View {
   @State var question: Question
 
   init(highestNumber: Binding<Int>) {
+    print("QuestionView2.init")
     self._highestNumber = highestNumber
     question = Question(highestNumber.wrappedValue)
   }
-  
+
   var body: some View {
-      Text(question.prompt)
-      Button("I got it") {
-        question = Question(highestNumber)
-      }.onChange(of: highestNumber) { _ in
-        question = Question(highestNumber)
-      }
+    Text(question.prompt)
+    Button("I got it") {
+      question = Question(highestNumber)
+    }.onChange(of: highestNumber) { _ in
+      print("onChangeOfHighestNumber: \(highestNumber)")
+      question = Question(highestNumber)
     }
+  }
 }
 
 struct HomeView3: View {
