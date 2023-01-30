@@ -103,7 +103,7 @@ struct HomeView3: View {
   var body: some View {
     NavigationStack {
       Picker("Highest Number", selection: $highestNumber) {
-        ForEach(4...12, id: \.self) { Text(String($0)) }
+        ForEach(4...12, id: \.self) { Text(String($0)).tag(Optional($0)) }
       }
       .pickerStyle(.wheel)
       NavigationLink(destination: QuestionView3(highestNumber: $highestNumber)) {
